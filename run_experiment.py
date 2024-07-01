@@ -8,11 +8,14 @@ from benchmarl.algorithms import IqlConfig
 from benchmarl.environments import VmasTask
 from benchmarl.experiment import Experiment, ExperimentConfig
 from benchmarl.models.mlp import MlpConfig
+from pathlib import Path
+from path_repo import GLOBAL_PATH_REPO
 
 if __name__ == "__main__":
+    yaml_path = f'{GLOBAL_PATH_REPO}/benchmarl/conf/experiment/my_base_experiment_1env.yaml'
 
     # Loads from "benchmarl/conf/experiment/base_experiment.yaml"
-    experiment_config = ExperimentConfig.get_from_yaml()
+    experiment_config = ExperimentConfig.get_from_yaml(yaml_path)
 
     # Loads from "benchmarl/conf/task/vmas/navigation.yaml"
     task = VmasTask.NAVIGATION.get_from_yaml()
