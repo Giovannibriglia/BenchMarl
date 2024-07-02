@@ -8,7 +8,6 @@ from benchmarl.algorithms import IqlConfig
 from benchmarl.environments import VmasTask
 from benchmarl.experiment import Experiment, ExperimentConfig
 from benchmarl.models.mlp import MlpConfig
-from pathlib import Path
 from path_repo import GLOBAL_PATH_REPO
 
 if __name__ == "__main__":
