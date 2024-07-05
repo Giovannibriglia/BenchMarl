@@ -7,14 +7,12 @@
 import os
 from pathlib import Path
 from typing import List
-
 from benchmarl.eval_results import load_and_merge_json_dicts, Plotting
-
 from matplotlib import pyplot as plt
 
 
 def run_benchmark() -> List[str]:
-    from benchmarl.algorithms import MappoConfig, QmixConfig
+    from benchmarl.algorithms import MappoConfig, IppoConfig, IqlConfig
     from benchmarl.benchmark import Benchmark
     from benchmarl.environments import VmasTask
     from benchmarl.experiment import ExperimentConfig
@@ -24,13 +22,14 @@ def run_benchmark() -> List[str]:
     experiment_config = ExperimentConfig.get_from_yaml()
     experiment_config.save_folder = Path(os.path.dirname(os.path.realpath(__file__)))
     experiment_config.loggers = []
-    experiment_config.max_n_iters = 100
+    experiment_config.max_n_iters = 10000
 
     # Configure benchmark
     tasks = [VmasTask.NAVIGATION.get_from_yaml()]
     algorithm_configs = [
+        IqlConfig.get_from_yaml(),
+        IppoConfig.get_from_yaml(),
         MappoConfig.get_from_yaml(),
-        QmixConfig.get_from_yaml(),
     ]
     model_config = MlpConfig.get_from_yaml()
     critic_model_config = MlpConfig.get_from_yaml()
@@ -85,6 +84,6 @@ if __name__ == "__main__":
     )
     Plotting.probability_of_improvement(
         environment_comparison_matrix,
-        algorithms_to_compare=[["qmix", "mappo"]],
+        algorithms_to_compare=[["iql", "ippo", "mappo"]],
     )
     plt.show()
